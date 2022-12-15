@@ -1,0 +1,58 @@
+{
+  "nodes": {
+    "nix-kube-generators": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1670607114,
+        "narHash": "sha256-Yo2HOdo/eqaA/Mw4e63rroX3PT/MkVxMwN9HNIrXbB4=",
+        "owner": "farcaller",
+        "repo": "nix-kube-generators",
+        "rev": "0b699dcd7f196ced425d7ae2af285b7877d904a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "farcaller",
+        "repo": "nix-kube-generators",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1666244578,
+        "narHash": "sha256-OO0F2b83isMVHYtcvxiExig28zPE7Weo7r1fHtQTZzU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "260eb420a2e55e3a0411e731b933c3a8bf6b778e",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1671007632,
+        "narHash": "sha256-1uxNTBOa0SMypJKOWeUqrz2VfmwQ1hVgWckPdgDNip4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b9a0cd40ede905f554399f3f165895dccfd35f3b",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nix-kube-generators": "nix-kube-generators",
+        "nixpkgs": "nixpkgs_2"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
