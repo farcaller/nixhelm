@@ -8,13 +8,22 @@
   outputs = { self, nixpkgs, nix-kube-generators }:
     let
       lib = (import nix-kube-generators { inherit nixpkgs; }).lib;
-      repos = [ "prometheus-community" ];
+      repos = builtins.attrNames (builtins.readDir ./charts);
     in
     {
       chartsMetadata = builtins.listToAttrs (map
-        (name: {
-          inherit name;
-          value = import ./charts/${name};
+        (repo: {
+          name = repo;
+          value =
+            let
+              charts = builtins.attrNames (builtins.readDir ./charts/${repo});
+            in
+            builtins.listToAttrs (map
+              (name: {
+                inherit name;
+                value = import ./charts/${repo}/${name};
+              })
+              charts);
         })
         repos);
       charts = builtins.mapAttrs
