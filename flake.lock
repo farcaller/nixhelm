@@ -1,15 +1,26 @@
 {
   "nodes": {
-    "nix-kube-generators": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
+    "flake-utils": {
       "locked": {
-        "lastModified": 1670607114,
-        "narHash": "sha256-Yo2HOdo/eqaA/Mw4e63rroX3PT/MkVxMwN9HNIrXbB4=",
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "id": "flake-utils",
+        "type": "indirect"
+      }
+    },
+    "nix-kube-generators": {
+      "locked": {
+        "lastModified": 1672136725,
+        "narHash": "sha256-gU1mxgPwERBX8hg3JjEmr3UFk5gmByMPwC+o909WB+w=",
         "owner": "farcaller",
         "repo": "nix-kube-generators",
-        "rev": "0b699dcd7f196ced425d7ae2af285b7877d904a9",
+        "rev": "dd4224b639102f736dcafbf88339d397b6bfc153",
         "type": "github"
       },
       "original": {
@@ -20,25 +31,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1666244578,
-        "narHash": "sha256-OO0F2b83isMVHYtcvxiExig28zPE7Weo7r1fHtQTZzU=",
+        "lastModified": 1672057183,
+        "narHash": "sha256-GN7/10DNNvs1FPj9tlZA2qgNdFuYKKuS3qlHTqAxasQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "260eb420a2e55e3a0411e731b933c3a8bf6b778e",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1671007632,
-        "narHash": "sha256-1uxNTBOa0SMypJKOWeUqrz2VfmwQ1hVgWckPdgDNip4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b9a0cd40ede905f554399f3f165895dccfd35f3b",
+        "rev": "b139e44d78c36c69bcbb825b20dbfa51e7738347",
         "type": "github"
       },
       "original": {
@@ -48,8 +45,9 @@
     },
     "root": {
       "inputs": {
+        "flake-utils": "flake-utils",
         "nix-kube-generators": "nix-kube-generators",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     }
   },

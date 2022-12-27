@@ -6,9 +6,9 @@ This is a collection of helm charts in a nix-digestable format.
 
 The flake has two primary outputs:
 
-`chartsMetadata.${repo}.${chart}` contains the metadata about a specific chart.
+`chartsMetadata.${system}.${repo}.${chart}` contains the metadata about a specific chart.
 
-`charts.${repo}.${chart}` contains derivation that produces the chart.
+`charts.${system}.${repo}.${chart}` contains derivation that produces the chart.
 
 The charts are updated from artifacthub.io.
 
