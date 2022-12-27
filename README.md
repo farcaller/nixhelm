@@ -4,11 +4,14 @@ This is a collection of helm charts in a nix-digestable format.
 
 ## Outputs
 
-The flake has two primary outputs:
+The flake has the following outputs:
 
-`chartsMetadata.${system}.${repo}.${chart}` contains the metadata about a specific chart.
+`chartsMetadata.${repo}.${chart}` contains the metadata about a specific chart.
 
-`charts.${system}.${repo}.${chart}` contains derivation that produces the chart.
+`chartsDerivations.${system}.${repo}.${chart}` contains the derivations producing the charts.
+
+`charts { pkgs = ... }.${repo}.${chart}` a shortcut for the above that doesn't
+depend on the nixpkgs input and allows to specify any nixpkgs.
 
 The charts are updated from artifacthub.io.
 
