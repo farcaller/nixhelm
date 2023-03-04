@@ -32,5 +32,31 @@
             builtins.mapAttrs (chartname: kubelib.downloadHelmChart) charts
         )
         self.chartsMetadata;
-  } // flake-utils.lib.eachDefaultSystem (system: { chartsDerivations = self.charts { pkgs = nixpkgs.legacyPackages.${system}; }; });
+  } // flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      chartsDerivations = self.charts { inherit pkgs; };
+
+      helmupdater = pkgs.poetry2nix.mkPoetryApplication {
+        python = pkgs.python310;
+        projectDir = ./.;
+      };
+
+      devShell = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          nixpkgs-fmt
+          poetry
+          python310Packages.autopep8
+          (pkgs.poetry2nix.mkPoetryEnv {
+            python = pkgs.python310;
+            projectDir = ./.;
+            editablePackageSources = {
+              manager = ./.;
+            };
+          })
+        ];
+      };
+    });
 }

@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "helmupdater"
+version = "0.1.0"
+description = ""
+authors = ["Vladimir Pouzanov <farcaller@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.28.2"
+typer = "^0.7.0"
+pyyaml = "^6.0"
+semver = "^2.13.0"
+chevron = "^0.14.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+helmupdater = "helmupdater:app"
