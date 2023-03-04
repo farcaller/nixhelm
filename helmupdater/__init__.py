@@ -82,7 +82,7 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool)
   
   if commit:
     subprocess.run(['git', 'add', chart_path], check=True)
-    subprocess.run(['git', 'commit', '-m', f'{repo_name}/{chart_name}: {remote_version}'], check=True)
+    subprocess.run(['git', 'commit', '-m', f'{repo_name}/{chart_name}: update to {remote_version}'], check=True)
 
 @app.command()
 def update(name: str, commit: bool = typer.Option(False)):
@@ -98,7 +98,10 @@ def update_all(commit: bool = typer.Option(False)):
   for repo_name, charts in charts.items():
     for chart_name, local_chart in charts.items():
       print(f'checking {repo_name}/{chart_name}')
-      update_one_chart(repo_name, chart_name, local_chart, commit)
+      try:
+        update_one_chart(repo_name, chart_name, local_chart, commit)
+      except RuntimeError as e:
+        print(f'failed: {e}')
 
 if __name__ == "__main__":
     app()
