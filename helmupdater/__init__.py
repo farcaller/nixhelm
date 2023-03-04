@@ -32,7 +32,7 @@ def get_hash(repo_name: str, chart_name: str) -> str:
 def get_charts():
   return json.loads(subprocess.check_output(['nix', 'eval', '.#chartsMetadata', '--json']))
 
-def update_one_chart(repo_name: str, chart_name: str, local_chart):
+def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool):
   repo_url = local_chart['repo']
 
   index_req = requests.get(f'{repo_url}/index.yaml')
@@ -79,22 +79,26 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart):
         chart=chart_name,
         version=remote_chart[0]['version'],
         hash=correct_hash)))
+  
+  if commit:
+    subprocess.run(['git', 'add', chart_path], check=True)
+    subprocess.run(['git', 'commit', '-m', f'{repo_name}/{chart_name}: {remote_version}'], check=True)
 
 @app.command()
-def update(name: str):
+def update(name: str, commit: bool = typer.Option(False)):
   repo_name, chart_name = name.split('/')
   charts = get_charts()
   local_chart = charts[repo_name][chart_name]
 
-  update_one_chart(repo_name, chart_name, local_chart)
+  update_one_chart(repo_name, chart_name, local_chart, commit)
 
 @app.command()
-def update_all():
+def update_all(commit: bool = typer.Option(False)):
   charts = get_charts()
   for repo_name, charts in charts.items():
     for chart_name, local_chart in charts.items():
       print(f'checking {repo_name}/{chart_name}')
-      update_one_chart(repo_name, chart_name, local_chart)
+      update_one_chart(repo_name, chart_name, local_chart, commit)
 
 if __name__ == "__main__":
     app()
