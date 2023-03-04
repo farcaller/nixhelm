@@ -9,6 +9,7 @@ jobs:
   update-charts:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Install Nix
         uses: cachix/install-nix-action@v20
         with:
