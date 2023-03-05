@@ -1,7 +1,6 @@
 import subprocess
 import json
 import os
-import glob
 
 from semver import VersionInfo
 import chevron
@@ -41,8 +40,10 @@ def get_charts():
 
 def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool):
   repo_url = local_chart['repo']
+  if repo_url[-1] != '/':
+    repo_url += '/'
 
-  index_req = requests.get(f'{repo_url}/index.yaml')
+  index_req = requests.get(f'{repo_url}index.yaml')
   index_req.encoding = 'utf8'
   all_charts = yaml.safe_load(index_req.text)
   remote_chart = all_charts['entries'][chart_name]
@@ -110,6 +111,44 @@ def update_all(commit: bool = typer.Option(False), rebuild_all: bool = typer.Opt
         build_chart(repo_name, chart_name, check=True)
       except RuntimeError as e:
         print(f'failed: {e}')
+
+@app.command()
+def init(repo_url: str, name: str, commit: bool = typer.Option(False)):
+  repo_name, chart_name = name.split('/')
+  charts = get_charts()
+  if charts.get(repo_name, {}).get(chart_name, None):
+    print('chart already exists')
+    exit(1)
+
+  repo_dir = os.path.join(os.curdir, 'charts', repo_name)
+  if not os.path.exists(repo_dir):
+    os.mkdir(repo_dir)
+
+  chart_dir = os.path.join(repo_dir, chart_name)
+  os.mkdir(chart_dir)
+
+  chart_path = os.path.join(chart_dir, 'default.nix')
+  with open(chart_path, 'w') as f:
+    f.write(chevron.render(
+      CHART_TEMPLATE,
+      data=dict(
+        repo=repo_url,
+        chart=chart_name,
+        version='0.0.0',
+        hash='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')))
+  
+  subprocess.run(['git', 'add', chart_path], check=True)
+  charts = get_charts()
+  local_chart = charts[repo_name][chart_name]
+  update_one_chart(repo_name, chart_name, local_chart, commit=False)
+
+  charts = get_charts()
+  local_chart = charts[repo_name][chart_name]
+  subprocess.run(['git', 'add', chart_path], check=True)
+
+  if commit:
+    subprocess.run(['git', 'commit', '-m', f'{repo_name}/{chart_name}: init at {local_chart["version"]}'], check=True)
+
 
 if __name__ == "__main__":
     app()
