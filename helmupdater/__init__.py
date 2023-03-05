@@ -19,8 +19,15 @@ CHART_TEMPLATE = '''{
 }
 '''
 
+def build_chart(repo_name: str, chart_name: str, check=False):
+  return subprocess.run([
+    'nix',
+    'build',
+    f'.#chartsDerivations.x86_64-linux.{repo_name}.{chart_name}'
+  ], capture_output=True, text=True, check=check)
+
 def get_hash(repo_name: str, chart_name: str) -> str:
-  cp = subprocess.run(['nix', 'build', f'.#chartsDerivations.x86_64-linux.{repo_name}.{chart_name}'], capture_output=True, text=True)
+  cp = build_chart(repo_name, chart_name)
   for l in cp.stderr.split('\n'):
     l = l.strip()
     if not l.startswith('got:'):
@@ -93,13 +100,14 @@ def update(name: str, commit: bool = typer.Option(False)):
   update_one_chart(repo_name, chart_name, local_chart, commit)
 
 @app.command()
-def update_all(commit: bool = typer.Option(False)):
+def update_all(commit: bool = typer.Option(False), rebuild_all: bool = typer.Option(False)):
   charts = get_charts()
   for repo_name, charts in charts.items():
     for chart_name, local_chart in charts.items():
       print(f'checking {repo_name}/{chart_name}')
       try:
         update_one_chart(repo_name, chart_name, local_chart, commit)
+        build_chart(repo_name, chart_name, check=True)
       except RuntimeError as e:
         print(f'failed: {e}')
 
