@@ -32,6 +32,13 @@ nix profile install nixpkgs#cachix
 cachix use nixhelm
 ```
 
+Alternatively, manually add this to `/etc/nix/nix.conf`:
+
+```
+substituters = https://cache.nixos.org https://nixhelm.cachix.org
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nixhelm.cachix.org-1:esqauAsR4opRF0UsGrA6H3gD21OrzMnBBYvJXeddjtY=
+```
+
 ## Adding new charts
 
 Clone the repository and run the following command from within it:
