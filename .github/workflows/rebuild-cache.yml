@@ -19,6 +19,6 @@ jobs:
           name: nixhelm
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: Check for updates
-        run: nix run .#helmupdater.x86_64-linux -- update-all --commit --rebuild
+        run: nix run .#helmupdater -- update-all --commit --rebuild
       - name: Push updates
         run: git push

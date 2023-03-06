@@ -20,7 +20,7 @@ The charts are updated nightly.
 Clone the repository and run the following command from within it:
 
 ```
-nix run .#helmupdater.x86_64-linux -- init $REPO $REPO_NAME/$CHART_NAME --commit
+nix run .#helmupdater -- init $REPO $REPO_NAME/$CHART_NAME --commit
 ```
 
 Where `REPO` is the url to the chart, `REPO_NAME` is the short name for the
@@ -31,7 +31,7 @@ nginx](https://github.com/bitnami/charts/tree/main/bitnami/nginx), run the
 following command:
 
 ```
-nix run .#helmupdater.x86_64-linux -- init "https://charts.bitnami.com/bitnami" bitnami/nginx --commit
+nix run .#helmupdater -- init "https://charts.bitnami.com/bitnami" bitnami/nginx --commit
 ```
 
 The command will create the properly formatted commit that you can then submit

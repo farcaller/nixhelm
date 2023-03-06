@@ -39,7 +39,7 @@
     {
       chartsDerivations = self.charts { inherit pkgs; };
 
-      helmupdater = pkgs.poetry2nix.mkPoetryApplication {
+      packages.helmupdater = pkgs.poetry2nix.mkPoetryApplication {
         python = pkgs.python310;
         projectDir = ./.;
       };
