@@ -13,7 +13,7 @@ The flake has the following outputs:
 `charts { pkgs = ... }.${repo}.${chart}` a shortcut for the above that doesn't
 depend on the nixpkgs input and allows to specify any nixpkgs.
 
-The charts are updated from artifacthub.io.
+The charts are updated nightly.
 
 ## Adding new charts
 
