@@ -15,6 +15,23 @@ depend on the nixpkgs input and allows to specify any nixpkgs.
 
 The charts are updated nightly.
 
+## Using the cache
+
+This repository and all the charts within are publicly cached at cachix as
+[nixhelm](https://app.cachix.org/cache/nixhelm). Here's how you can quickly
+enable it in your nix installation:
+
+```
+# without flakes
+nix-env -iA cachix -f https://cachix.org/api/v1/install
+
+# with flakes
+nix profile install nixpkgs#cachix
+
+# then enable the cache
+cachix use nixhelm
+```
+
 ## Adding new charts
 
 Clone the repository and run the following command from within it:
