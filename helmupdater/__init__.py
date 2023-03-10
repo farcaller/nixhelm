@@ -71,7 +71,7 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool)
       data=dict(
         repo=repo_url,
         chart=chart_name,
-        version=remote_chart[0]['version'],
+        version=str(remote_version),
         hash='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')))
   
   correct_hash = get_hash(repo_name, chart_name)
@@ -85,7 +85,7 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool)
       data=dict(
         repo=repo_url,
         chart=chart_name,
-        version=remote_chart[0]['version'],
+        version=str(remote_version),
         hash=correct_hash)))
   
   if commit:
