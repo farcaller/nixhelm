@@ -29,7 +29,12 @@
       builtins.mapAttrs
         (
           reponame: charts:
-            builtins.mapAttrs (chartname: kubelib.downloadHelmChart) charts
+            builtins.mapAttrs
+              (
+                chartname: chartspec:
+                  (kubelib.downloadHelmChart (builtins.removeAttrs chartspec ["bogusVersion"]))
+              )
+              charts
         )
         self.chartsMetadata;
   } // flake-utils.lib.eachDefaultSystem (system:

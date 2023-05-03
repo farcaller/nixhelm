@@ -14,7 +14,8 @@ CHART_TEMPLATE = '''{
   repo = "{{ repo }}";
   chart = "{{ chart }}";
   version = "{{ version }}";
-  chartHash = "{{ hash }}";
+  chartHash = "{{ hash }}";{{#bogus_version}}
+  bogusVersion = true;{{/bogus_version}}
 }
 '''
 
@@ -47,11 +48,20 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool)
   index_req.encoding = 'utf8'
   all_charts = yaml.safe_load(index_req.text)
   remote_chart = all_charts['entries'][chart_name]
-  my_version = VersionInfo.parse(local_chart['version'])
+  bogus_version = local_chart.get('bogusVersion', False)
+  raw_version = local_chart['version']
+  bogus_version_fixed = False
+  if bogus_version and raw_version.startswith('v'):
+    raw_version = raw_version[1:]
+    bogus_version_fixed = True
+  my_version = VersionInfo.parse(raw_version)
   remote_version = '0.0.0'
 
   for chart in remote_chart[::-1]:
     version_str = chart['version']
+    if bogus_version and version_str.startswith('v'):
+      version_str = version_str[1:]
+      bogus_version_fixed = True
     if len(version_str.split('-')) != 1:
       continue
     version = VersionInfo.parse(version_str)
@@ -60,6 +70,10 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool)
 
   if remote_version <= my_version:
     return
+  
+  if bogus_version_fixed:
+    my_version = 'v' + str(my_version)
+    remote_version = 'v' + str(remote_version)
   
   print(f'updating {my_version} -> {remote_version}')
   
@@ -72,7 +86,9 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool)
         repo=repo_url,
         chart=chart_name,
         version=str(remote_version),
-        hash='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')))
+        hash='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+        bogus_version=bogus_version,
+      )))
   
   correct_hash = get_hash(repo_name, chart_name)
 
@@ -86,7 +102,9 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool)
         repo=repo_url,
         chart=chart_name,
         version=str(remote_version),
-        hash=correct_hash)))
+        hash=correct_hash,
+        bogus_version=bogus_version,
+      )))
   
   if commit:
     subprocess.run(['git', 'add', chart_path], check=True)
@@ -116,7 +134,7 @@ def update_all(commit: bool = typer.Option(False), rebuild: bool = typer.Option(
         print(f'failed: {e}')
 
 @app.command()
-def init(repo_url: str, name: str, commit: bool = typer.Option(False)):
+def init(repo_url: str, name: str, commit: bool = typer.Option(False), bogus_version: bool = typer.Option(False)):
   repo_name, chart_name = name.split('/')
   charts = get_charts()
   if charts.get(repo_name, {}).get(chart_name, None):
@@ -138,7 +156,9 @@ def init(repo_url: str, name: str, commit: bool = typer.Option(False)):
         repo=repo_url,
         chart=chart_name,
         version='0.0.0',
-        hash='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=')))
+        hash='sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=',
+        bogus_version=bogus_version,
+      )))
   
   subprocess.run(['git', 'add', chart_path], check=True)
   charts = get_charts()
