@@ -37,7 +37,7 @@ jobs:
       - name: Check for updates
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          for CHANGED_FILE in "${{ steps.changed-files.outputs.added_files }}"; do
+          for CHANGED_FILE in ${{ steps.changed-files.outputs.added_files }}; do
             if [[ "$CHANGED_FILE" =~ charts/(.+/.+)/default.nix$ ]]; then
               CHART="${BASH_REMATCH[1]}"
               echo "rebuilding for $CHART"
