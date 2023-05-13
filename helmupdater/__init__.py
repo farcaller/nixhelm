@@ -1,6 +1,7 @@
 import subprocess
 import json
 import os
+import functools
 
 from semver import VersionInfo
 import chevron
@@ -19,11 +20,21 @@ CHART_TEMPLATE = '''{
 }
 '''
 
+@functools.cache
+def current_system():
+  return subprocess.run([
+    'nix',
+    'eval',
+    '--impure',
+    '--expr',
+    'builtins.currentSystem',
+  ], capture_output=True, text=True, check=True).stdout.strip()
+
 def build_chart(repo_name: str, chart_name: str, check=False):
   return subprocess.run([
     'nix',
     'build',
-    f'.#chartsDerivations.x86_64-linux.{repo_name}.{chart_name}'
+    f'.#chartsDerivations.{current_system()}.{repo_name}.{chart_name}'
   ], capture_output=True, text=True, check=check)
 
 def get_hash(repo_name: str, chart_name: str) -> str:
@@ -34,7 +45,7 @@ def get_hash(repo_name: str, chart_name: str) -> str:
       continue
     l = l[4:]
     return l.strip()
-  return None
+  raise RuntimeError(f'failed to get the hash for {repo_name}/{chart_name}:\n{cp.stderr}')
 
 def get_charts():
   return json.loads(subprocess.check_output(['nix', 'eval', '.#chartsMetadata', '--json']))
