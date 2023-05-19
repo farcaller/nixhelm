@@ -1,6 +1,6 @@
 {
   repo = "https://victoriametrics.github.io/helm-charts/";
   chart = "victoria-metrics-cluster";
-  version = "0.9.62";
-  chartHash = "sha256-irRFIF9jCrlRNAVbzbtS5KqxpsGcyjMW5wmR9giN0Gw=";
+  version = "0.9.63";
+  chartHash = "sha256-USErtvKcgicXoPONCR64Pg+3ITopORCiS3/VZGC4Nc0=";
 }
