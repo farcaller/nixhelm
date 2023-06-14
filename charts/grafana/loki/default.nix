@@ -1,6 +1,6 @@
 {
   repo = "https://grafana.github.io/helm-charts/";
   chart = "loki";
-  version = "5.6.4";
-  chartHash = "sha256-pwwcLRSL+/xxBsTGoBcZmDracrpESPIp7PluXiVNt8I=";
+  version = "5.7.1";
+  chartHash = "sha256-RKy0KA19/DvSgmiIwe8KQYRNw4wHbWkW2YFMenEwR80=";
 }
