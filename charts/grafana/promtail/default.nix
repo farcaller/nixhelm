@@ -1,6 +1,6 @@
 {
   repo = "https://grafana.github.io/helm-charts/";
   chart = "promtail";
-  version = "6.11.3";
-  chartHash = "sha256-MWTg7LR9VpsPuv/o5QN94sSL8FPSTudD0sL8eCmioC4=";
+  version = "6.11.5";
+  chartHash = "sha256-deVPhQt2bPHk7wG0gEsWmPqYeNxWZJD0hh6dvJSMgWY=";
 }
