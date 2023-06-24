@@ -1,6 +1,6 @@
 {
   repo = "https://ananace.gitlab.io/charts/";
   chart = "lemmy";
-  version = "0.2.0";
-  chartHash = "sha256-HPxIqxHl+kQ9HFDN0eaQ5a+381GqxP4deOazw1jkkUQ=";
+  version = "0.3.0";
+  chartHash = "sha256-Jrivw581fbK+WG0vHb8kdX4hyJPQBOOabKuTcZXfxeE=";
 }
