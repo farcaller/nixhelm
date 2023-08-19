@@ -1,6 +1,6 @@
 {
   repo = "https://groundhog2k.github.io/helm-charts/";
   chart = "ghost";
-  version = "0.100.1";
-  chartHash = "sha256-h66LoMZ23Uie3kklkhnjkeCQul1jtPiovXuuWUlb35I=";
+  version = "0.100.3";
+  chartHash = "sha256-klrMMZxeu19SOMt6WqzaNWrOwZ0iq3WBWeyhA0vjQ7g=";
 }
