@@ -1,6 +1,6 @@
 {
   repo = "https://prometheus-community.github.io/helm-charts/";
   chart = "prometheus";
-  version = "24.4.0";
-  chartHash = "sha256-GxhPEVLNLobYrxMpnl9Xj/lCpX7jxFmpK5ZupIDRaKI=";
+  version = "24.5.0";
+  chartHash = "sha256-s2/rq4qJNlZw/uuGV3dXJEH/r56aInJXFl8yib9wKdU=";
 }
