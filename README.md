@@ -2,6 +2,14 @@
 
 This is a collection of helm charts in a nix-digestable format.
 
+## Supported chart repoitories
+
+Nixhelm supports only the traditional helm chart repos (served over http[s]).
+The support for OCI charts is [pending](https://github.com/farcaller/nixhelm/issues/1).
+
+If your chart is hosted in a git repo, remember that you can fetch it as a flake
+input and pass to `buildHelmChart` [directly](https://github.com/farcaller/nixhelm/issues/10).
+
 ## Outputs
 
 The flake has the following outputs:
