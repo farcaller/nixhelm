@@ -1,5 +1,5 @@
 {
-  description = "Nix-wrapped helm packages";
+  description = "A collection of kubernetes helm charts in a nix-digestable format.";
 
   inputs = {
     nix-kube-generators.url = "github:farcaller/nix-kube-generators";

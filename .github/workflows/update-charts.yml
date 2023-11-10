@@ -3,11 +3,12 @@ on:
   schedule:
     - cron:  '0 0 * * *'
   workflow_dispatch: {}
-permissions:
-  contents: write
 jobs:
   update-charts:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
     steps:
       - uses: actions/checkout@v3
       - uses: fregante/setup-git-user@v2
@@ -24,3 +25,7 @@ jobs:
         run: nix run .#helmupdater -- update-all --commit
       - name: Push updates
         run: git push
+      - uses: flakestry/flakestry-publish@main
+        with:
+          version: "${{ github.sha }}"
+
