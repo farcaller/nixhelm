@@ -44,4 +44,8 @@ jobs:
               nix run .#helmupdater -- update "$CHART" --commit --rebuild
             fi
           done
-          
+      - uses: flakestry/flakestry-publish@main
+        if: steps.changed-files.outputs.any_changed == 'true'
+        with:
+          version: "${{ github.sha }}"
+
