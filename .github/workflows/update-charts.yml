@@ -7,7 +7,6 @@ jobs:
   update-charts:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: write
     steps:
       - uses: actions/checkout@v3
@@ -25,7 +24,4 @@ jobs:
         run: nix run .#helmupdater -- update-all --commit
       - name: Push updates
         run: git push
-      - uses: flakestry/flakestry-publish@main
-        with:
-          version: "${{ github.sha }}"
 
