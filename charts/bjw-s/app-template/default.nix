@@ -1,6 +1,6 @@
 {
-  repo = "https://bjw-s.github.io/helm-charts";
+  repo = "https://bjw-s.github.io/helm-charts/";
   chart = "app-template";
-  version = "2.2.0";
-  chartHash = "sha256-lO96rAB1m3UrYiCaeJCPDT3kQno2ahzv4q0/f03/o+c=";
+  version = "2.3.0";
+  chartHash = "sha256-J0hWCLYyeVIiIJcFOCt5Oq0IubzFw3Bs61TWWuVOvYU=";
 }
