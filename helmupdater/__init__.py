@@ -50,12 +50,18 @@ def get_hash(repo_name: str, chart_name: str) -> str:
 def get_charts():
   return json.loads(subprocess.check_output(['nix', 'eval', '.#chartsMetadata', '--json']))
 
-def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool):
+def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool, fail_on_fetch: bool):
   repo_url = local_chart['repo']
   if repo_url[-1] != '/':
     repo_url += '/'
 
-  index_req = requests.get(f'{repo_url}index.yaml')
+  try:
+    index_req = requests.get(f'{repo_url}index.yaml')
+  except requests.exceptions.ConnectionError as e:
+    print("failed to fetch the repo: {e}")
+    if fail_on_fetch:
+      raise
+    return
   index_req.encoding = 'utf8'
   all_charts = yaml.safe_load(index_req.text)
   remote_chart = all_charts['entries'][chart_name]
@@ -127,7 +133,7 @@ def update(name: str, commit: bool = typer.Option(False), rebuild: bool = typer.
   charts = get_charts()
   local_chart = charts[repo_name][chart_name]
 
-  update_one_chart(repo_name, chart_name, local_chart, commit)
+  update_one_chart(repo_name, chart_name, local_chart, commit, fail_on_fetch=True)
   if rebuild:
     build_chart(repo_name, chart_name, check=True)
 
@@ -138,7 +144,7 @@ def update_all(commit: bool = typer.Option(False), rebuild: bool = typer.Option(
     for chart_name, local_chart in charts.items():
       print(f'checking {repo_name}/{chart_name}')
       try:
-        update_one_chart(repo_name, chart_name, local_chart, commit)
+        update_one_chart(repo_name, chart_name, local_chart, commit, fail_on_fetch=False)
         if rebuild:
           build_chart(repo_name, chart_name, check=True)
       except RuntimeError as e:
@@ -174,7 +180,7 @@ def init(repo_url: str, name: str, commit: bool = typer.Option(False), bogus_ver
   subprocess.run(['git', 'add', chart_path], check=True)
   charts = get_charts()
   local_chart = charts[repo_name][chart_name]
-  update_one_chart(repo_name, chart_name, local_chart, commit=False)
+  update_one_chart(repo_name, chart_name, local_chart, commit=False, fail_on_fetch=True)
 
   charts = get_charts()
   local_chart = charts[repo_name][chart_name]
