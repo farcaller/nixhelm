@@ -58,7 +58,7 @@ def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool,
   try:
     index_req = requests.get(f'{repo_url}index.yaml')
   except requests.exceptions.ConnectionError as e:
-    print("failed to fetch the repo: {e}")
+    print(f'failed to fetch the repo: {e}')
     if fail_on_fetch:
       raise
     return
