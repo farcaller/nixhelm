@@ -50,49 +50,60 @@ def get_hash(repo_name: str, chart_name: str) -> str:
 def get_charts():
   return json.loads(subprocess.check_output(['nix', 'eval', '.#chartsMetadata', '--json']))
 
-def update_one_chart(repo_name: str, chart_name: str, local_chart, commit: bool, fail_on_fetch: bool):
+def update_one_chart(
+    repo_name: str,
+    chart_name: str,
+    local_chart,
+    commit: bool,
+    fail_on_fetch: bool,
+    rehash_only: bool = False,
+    ):
   repo_url = local_chart['repo']
   if repo_url[-1] != '/':
     repo_url += '/'
 
-  try:
-    index_req = requests.get(f'{repo_url}index.yaml')
-  except requests.exceptions.ConnectionError as e:
-    print(f'failed to fetch the repo: {e}')
-    if fail_on_fetch:
-      raise
-    return
-  index_req.encoding = 'utf8'
-  all_charts = yaml.safe_load(index_req.text)
-  remote_chart = all_charts['entries'][chart_name]
-  bogus_version = local_chart.get('bogusVersion', False)
-  raw_version = local_chart['version']
-  bogus_version_fixed = False
-  if bogus_version and raw_version.startswith('v'):
-    raw_version = raw_version[1:]
-    bogus_version_fixed = True
-  my_version = VersionInfo.parse(raw_version)
-  remote_version = '0.0.0'
-
-  for chart in remote_chart[::-1]:
-    version_str = chart['version']
-    if bogus_version and version_str.startswith('v'):
-      version_str = version_str[1:]
+  if not rehash_only:
+    try:
+      index_req = requests.get(f'{repo_url}index.yaml')
+    except requests.exceptions.ConnectionError as e:
+      print(f'failed to fetch the repo: {e}')
+      if fail_on_fetch:
+        raise
+      return
+    index_req.encoding = 'utf8'
+    all_charts = yaml.safe_load(index_req.text)
+    remote_chart = all_charts['entries'][chart_name]
+    bogus_version = local_chart.get('bogusVersion', False)
+    raw_version = local_chart['version']
+    bogus_version_fixed = False
+    if bogus_version and raw_version.startswith('v'):
+      raw_version = raw_version[1:]
       bogus_version_fixed = True
-    if len(version_str.split('-')) != 1:
-      continue
-    version = VersionInfo.parse(version_str)
-    if version > remote_version:
-      remote_version = version
+    my_version = VersionInfo.parse(raw_version)
+    remote_version = '0.0.0'
 
-  if remote_version <= my_version:
-    return
-  
-  if bogus_version_fixed:
-    my_version = 'v' + str(my_version)
-    remote_version = 'v' + str(remote_version)
-  
-  print(f'updating {my_version} -> {remote_version}')
+    for chart in remote_chart[::-1]:
+      version_str = chart['version']
+      if bogus_version and version_str.startswith('v'):
+        version_str = version_str[1:]
+        bogus_version_fixed = True
+      if len(version_str.split('-')) != 1:
+        continue
+      version = VersionInfo.parse(version_str)
+      if version > remote_version:
+        remote_version = version
+
+    if remote_version <= my_version:
+      return
+    
+    if bogus_version_fixed:
+      my_version = 'v' + str(my_version)
+      remote_version = 'v' + str(remote_version)
+    
+    print(f'updating {my_version} -> {remote_version}')
+  else:
+    remote_version = local_chart['version']
+    bogus_version = local_chart.get('bogusVersion', False)
   
   chart_path = os.path.join(os.curdir, 'charts', repo_name, chart_name, 'default.nix')
   
@@ -138,13 +149,17 @@ def update(name: str, commit: bool = typer.Option(False), rebuild: bool = typer.
     build_chart(repo_name, chart_name, check=True)
 
 @app.command()
-def update_all(commit: bool = typer.Option(False), rebuild: bool = typer.Option(False)):
+def update_all(
+  commit: bool = typer.Option(False),
+  rebuild: bool = typer.Option(False),
+  rehash_only: bool = typer.Option(False),
+  ):
   charts = get_charts()
   for repo_name, charts in charts.items():
     for chart_name, local_chart in charts.items():
       print(f'checking {repo_name}/{chart_name}')
       try:
-        update_one_chart(repo_name, chart_name, local_chart, commit, fail_on_fetch=False)
+        update_one_chart(repo_name, chart_name, local_chart, commit, fail_on_fetch=False, rehash_only=rehash_only)
         if rebuild:
           build_chart(repo_name, chart_name, check=True)
       except RuntimeError as e:
