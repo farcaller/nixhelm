@@ -2,10 +2,13 @@
   description = "A collection of kubernetes helm charts in a nix-digestable format.";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-kube-generators.url = "github:farcaller/nix-kube-generators";
+    poetry2nix.url = "github:nix-community/poetry2nix";
+    poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-kube-generators, ... }: {
+  outputs = { self, nixpkgs, flake-utils, nix-kube-generators, poetry2nix, ... }: {
     chartsMetadata = builtins.listToAttrs (map
       (repo: {
         name = repo;
@@ -40,11 +43,12 @@
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = nixpkgs.legacyPackages.${system};
+      inherit (poetry2nix.lib.mkPoetry2Nix { inherit pkgs; }) mkPoetryApplication;
     in
     {
       chartsDerivations = self.charts { inherit pkgs; };
 
-      packages.helmupdater = pkgs.poetry2nix.mkPoetryApplication {
+      packages.helmupdater = mkPoetryApplication {
         python = pkgs.python310;
         projectDir = ./.;
       };
