@@ -43,7 +43,7 @@
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = nixpkgs.legacyPackages.${system};
-      inherit (poetry2nix.lib.mkPoetry2Nix { inherit pkgs; }) mkPoetryApplication;
+      inherit (poetry2nix.lib.mkPoetry2Nix { inherit pkgs; }) mkPoetryEnv mkPoetryApplication;
     in
     {
       chartsDerivations = self.charts { inherit pkgs; };
@@ -58,7 +58,7 @@
           nixpkgs-fmt
           poetry
           python310Packages.autopep8
-          (pkgs.poetry2nix.mkPoetryEnv {
+          (mkPoetryEnv {
             python = pkgs.python310;
             projectDir = ./.;
             editablePackageSources = {
