@@ -1,6 +1,6 @@
 {
   repo = "https://kubernetes-sigs.github.io/node-feature-discovery/charts/";
   chart = "node-feature-discovery";
-  version = "0.15.0";
-  chartHash = "sha256-ENIt3uVUR+BF7MdYcG0SudFdY2NlkrlgaOOJFIrC92g=";
+  version = "0.15.1";
+  chartHash = "sha256-JpwWaSlwC8bbeiz7WRkQnvYXf6Z4P4wB7pNUuthy8aI=";
 }
