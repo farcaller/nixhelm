@@ -89,9 +89,12 @@ def update_one_chart(
         bogus_version_fixed = True
       if len(version_str.split('-')) != 1:
         continue
-      version = VersionInfo.parse(version_str)
-      if version > remote_version:
-        remote_version = version
+      try:
+        version = VersionInfo.parse(version_str)
+        if version > remote_version:
+          remote_version = version
+      except ValueError:
+        print(f"skipping version `{version_str}` for chart {chart_name}") 
 
     if remote_version <= my_version:
       return
