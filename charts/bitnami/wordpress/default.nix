@@ -1,6 +1,6 @@
 {
   repo = "https://charts.bitnami.com/bitnami/";
   chart = "wordpress";
-  version = "19.3.0";
-  chartHash = "sha256-bMmM/nkIFSzktnnwSOHUOzoC/9NryKZ+pCcI0S0YjWg=";
+  version = "19.4.1";
+  chartHash = "sha256-jKUIqP5Q1A7XFNTfLC+IWhzzs9u9vs/MJca/uG5MtNY=";
 }
