@@ -1,6 +1,6 @@
 {
   repo = "https://charts.sysdig.com/";
   chart = "sysdig-deploy";
-  version = "1.48.0";
-  chartHash = "sha256-hxqR/XeaijmeFKT2hDDEcpAW3XUYd3N6XaXdaCdh0lk=";
+  version = "1.48.1";
+  chartHash = "sha256-mOa3NDQG3Sesm08wYRr5Oc9JFPVP4jLGC3js3AUFNqw=";
 }
