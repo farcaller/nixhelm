@@ -1,6 +1,6 @@
 {
   repo = "https://charts.bitnami.com/bitnami/";
   chart = "external-dns";
-  version = "7.2.2";
-  chartHash = "sha256-W4Up8lyKvYKWCeNwnmD2gBr0ATujoUgjCgg9RU57kZs=";
+  version = "7.3.0";
+  chartHash = "sha256-EeJ1gnF3udFS6GD2NxyPN99cnqvDq63olXeAN3CSAU8=";
 }
