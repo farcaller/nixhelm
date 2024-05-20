@@ -1,6 +1,6 @@
 {
   repo = "https://isindir.github.io/sops-secrets-operator/";
   chart = "sops-secrets-operator";
-  version = "0.18.6";
-  chartHash = "sha256-R+qaYTnZ+OPveXzBklLc4Y+dDAZoMRyF65NFTL4gWDI=";
+  version = "0.19.0";
+  chartHash = "sha256-90b7Q2hJ91EDrwNJv0vY6iIfztdhLnur0i5SBJCTjXQ=";
 }
