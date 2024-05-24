@@ -1,6 +1,6 @@
 {
   repo = "https://charts.longhorn.io/";
   chart = "longhorn";
-  version = "1.6.1";
-  chartHash = "sha256-/6+nqtk3vdkRZRL9DEgwlYa/yhs8CaEPAzn4vCA3DAA=";
+  version = "1.6.2";
+  chartHash = "sha256-SLAyUEeT62rerEPqAG04uwHoZBVNlN+fhzpq4qkuoNE=";
 }
