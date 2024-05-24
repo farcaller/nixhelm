@@ -1,7 +1,7 @@
 {
   repo = "https://kyverno.github.io/kyverno/";
   chart = "kyverno";
-  version = "v3.2.2";
-  chartHash = "sha256-YKhwwRMd+7VEJ8ErTNw3yl85R81tqqM8RQQB2HW0LGo=";
+  version = "v3.2.3";
+  chartHash = "sha256-aMkYuhwMPqbapcbsR0z/hKzweD054sHej3Qjd2rRRGg=";
   bogusVersion = true;
 }
