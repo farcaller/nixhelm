@@ -24,7 +24,7 @@ jobs:
       - uses: fregante/setup-git-user@v2
         if: steps.changed-files.outputs.any_changed == 'true'
       - name: Install Nix
-        uses: cachix/install-nix-action@v20
+        uses: cachix/install-nix-action@v27
         if: steps.changed-files.outputs.any_changed == 'true'
         with:
           extra_nix_config: 'experimental-features = nix-command flakes'
