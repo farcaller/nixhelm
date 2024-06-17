@@ -29,7 +29,7 @@ jobs:
         with:
           extra_nix_config: 'experimental-features = nix-command flakes'
           nix_path: nixpkgs=channel:nixos-unstable
-      - uses: cachix/cachix-action@v12
+      - uses: cachix/cachix-action@v15
         if: steps.changed-files.outputs.any_changed == 'true'
         with:
           name: nixhelm
