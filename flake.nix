@@ -49,7 +49,7 @@
       chartsDerivations = self.charts { inherit pkgs; };
 
       packages.helmupdater = mkPoetryApplication {
-        python = pkgs.python310;
+        python = pkgs.python312;
         projectDir = ./.;
       };
 
@@ -59,7 +59,7 @@
           poetry
           python310Packages.autopep8
           (mkPoetryEnv {
-            python = pkgs.python310;
+            python = pkgs.python312;
             projectDir = ./.;
             editablePackageSources = {
               manager = ./.;
