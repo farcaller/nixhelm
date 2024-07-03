@@ -1,6 +1,6 @@
 {
   repo = "https://charts.bitnami.com/bitnami/";
   chart = "mysql";
-  version = "11.1.6";
-  chartHash = "sha256-d4Cee2OIkwM1eKFI9hcDlxBoHGXx4mpKqtdRIWBkEnw=";
+  version = "11.1.7";
+  chartHash = "sha256-D9tSmXGx8h9E3fIKNpaMRNFCoq3ZpQ110QNXsXt9P6c=";
 }
