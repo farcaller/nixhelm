@@ -12,38 +12,22 @@
     poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-kube-generators, poetry2nix, ... }: {
-    chartsMetadata = builtins.listToAttrs (map
-      (repo: {
-        name = repo;
-        value =
-          let
-            charts = builtins.attrNames (builtins.readDir ./charts/${repo});
-          in
-          builtins.listToAttrs (map
-            (name: {
-              inherit name;
-              value = import ./charts/${repo}/${name};
-            })
-            charts);
-      })
-      (builtins.attrNames (builtins.readDir ./charts)));
+  outputs = { self, haumea, nixpkgs, flake-utils, nix-kube-generators, poetry2nix, ... }: {
+    chartsMetadata = haumea.lib.load {
+      src = ./charts;
+      transformer = haumea.lib.transformers.liftDefault;
+    };
 
     charts = { pkgs }:
       let
         kubelib = nix-kube-generators.lib { inherit pkgs; };
+        trimBogusVersion = attrs: builtins.removeAttrs attrs ["bogusVersion"];
       in
-      builtins.mapAttrs
-        (
-          reponame: charts:
-            builtins.mapAttrs
-              (
-                chartname: chartspec:
-                  (kubelib.downloadHelmChart (builtins.removeAttrs chartspec ["bogusVersion"]))
-              )
-              charts
-        )
-        self.chartsMetadata;
+      haumea.lib.load {
+        src = ./charts;
+        loader = {...}: p: kubelib.downloadHelmChart (trimBogusVersion (import p));
+        transformer = haumea.lib.transformers.liftDefault;
+      };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = nixpkgs.legacyPackages.${system};
