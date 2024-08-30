@@ -1,6 +1,6 @@
 {
   repo = "https://mariadb-operator.github.io/mariadb-operator/";
   chart = "mariadb-operator";
-  version = "0.29.0";
-  chartHash = "sha256-zr/DZ/ieDvdrUaJ9bBmD2fDJKHl7YdKUtMjkPTwWrk8=";
+  version = "0.30.0";
+  chartHash = "sha256-fFBZC9V1GGlH1qxMDbmmtcbNAo8J6hUg5bzaeKkZXrk=";
 }
