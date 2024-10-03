@@ -1,6 +1,6 @@
 {
   repo = "https://charts.bitnami.com/bitnami/";
   chart = "rabbitmq-cluster-operator";
-  version = "4.3.23";
-  chartHash = "sha256-MlAOs9r3zSOCyhGnEsT5umbyO2XZpGSDuCSIpYS9R08=";
+  version = "4.3.24";
+  chartHash = "sha256-Ltek96nfrEEKirV0dQ/YC0iKsa5HhfULqWmVvIKzzxY=";
 }
