@@ -1,6 +1,6 @@
 {
   repo = "https://charts.bitnami.com/bitnami/";
   chart = "mastodon";
-  version = "9.0.2";
-  chartHash = "sha256-8MbVj/qGd2gwgFv1/vBfRYehJurTmNHtnrySfZzwqMo=";
+  version = "9.0.3";
+  chartHash = "sha256-ZVhQTybRjFXeeRqmof2baqZ/6Qclg25eSdTgRawjHPw=";
 }
