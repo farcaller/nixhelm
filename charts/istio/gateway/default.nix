@@ -1,6 +1,6 @@
 {
   repo = "https://istio-release.storage.googleapis.com/charts/";
   chart = "gateway";
-  version = "1.24.0";
-  chartHash = "sha256-cF2huT0x8986+GHe1fc3Dr6rfTpObgekA9DT1A1GLDc=";
+  version = "1.24.1";
+  chartHash = "sha256-TpISg1FNqOk6tsjWatB81/iVSE08gtBvDX0tOVqzyoY=";
 }
