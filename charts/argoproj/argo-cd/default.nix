@@ -1,6 +1,6 @@
 {
   repo = "https://argoproj.github.io/argo-helm/";
   chart = "argo-cd";
-  version = "7.7.5";
-  chartHash = "sha256-glINw4QNjq4dIrvwuanO4unCp/bk4jUbP86J6OdmnK8=";
+  version = "7.7.6";
+  chartHash = "sha256-WGj+yB/2AvQQGV43q7uRrRhNMwgQzgJWRxsrQJE7f1g=";
 }
