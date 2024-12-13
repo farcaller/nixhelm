@@ -1,6 +1,6 @@
 {
   repo = "https://pkgs.tailscale.com/helmcharts/";
   chart = "tailscale-operator";
-  version = "1.78.1";
-  chartHash = "sha256-CmMXhdteS49lpnqPPbfplEYoYH/DuMOwf1wzFXTxKLo=";
+  version = "1.78.3";
+  chartHash = "sha256-XQV4oObQMb8TiUPSr8d0TNtdYvtxocu9AMpTl8hZflU=";
 }
