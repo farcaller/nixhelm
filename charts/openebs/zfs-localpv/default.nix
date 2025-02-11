@@ -1,6 +1,6 @@
 {
   repo = "https://openebs.github.io/zfs-localpv/";
   chart = "zfs-localpv";
-  version = "2.6.2";
-  chartHash = "sha256-QH+i1QPHiIQGOZnOpo3iai+5rj2CgonOOGs7q4ZPD9c=";
+  version = "2.7.0";
+  chartHash = "sha256-Hz5hsMdReaRUZDVB7rGpa7GTO2KanPfmksP2ySHmA0g=";
 }
