@@ -1,6 +1,6 @@
 {
   repo = "https://argoproj.github.io/argo-helm/";
   chart = "argo-workflows";
-  version = "0.45.8";
-  chartHash = "sha256-oSviqfQRzWVyXc4TjFPvf2hIxHZ3qWQCFzbFj8zhFq0=";
+  version = "0.45.9";
+  chartHash = "sha256-0BwS6bmLzHK5YfkKK0BaN8UhNiqEHooFP/k8q8d/u08=";
 }
