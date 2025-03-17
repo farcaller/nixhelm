@@ -1,6 +1,6 @@
 {
   repo = "https://charts.authelia.com/";
   chart = "authelia";
-  version = "0.9.16";
-  chartHash = "sha256-pSVqkyOsd56fHGQk3P3zDNBCXFMtsgVxuhZBCY5ORtM=";
+  version = "0.10.1";
+  chartHash = "sha256-cR4yklVLE50vhdF8ticvhgjhE63gqcGNkunkhFO2N2s=";
 }
