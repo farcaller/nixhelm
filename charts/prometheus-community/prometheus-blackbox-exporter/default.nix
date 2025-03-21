@@ -1,6 +1,6 @@
 {
   repo = "https://prometheus-community.github.io/helm-charts/";
   chart = "prometheus-blackbox-exporter";
-  version = "9.3.0";
-  chartHash = "sha256-u3Ys9AKDaFCpVRJKtBCBbHnpwpmtA1fr0b3wz1nGdAs=";
+  version = "9.4.0";
+  chartHash = "sha256-w7p+SsL2agPu90Rmarsi8Arpd+PfKHuzS1saZEbVH7w=";
 }
